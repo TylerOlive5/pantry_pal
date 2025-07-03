@@ -1,6 +1,9 @@
 name: Flutter Android Build
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -8,15 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Flutter
+      - name: Set up Flutter 3.22.2
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.2'
           channel: stable
-          cache: false  # Disable cache to force correct Dart version
+
+      - name: Display Dart and Flutter versions
+        run: |
+          flutter --version
+          dart --version
 
       - name: Install dependencies
         run: flutter pub get
